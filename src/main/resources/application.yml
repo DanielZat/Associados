@@ -1,0 +1,24 @@
+logging:
+  level:
+    root: INFO
+    com.boasaude: INFO
+    io.netty.util.internal: INFO
+
+server:
+  port: 9999
+
+spring:
+  rabbitmq:
+    addresses: localhost:5672
+  cloud:
+    stream:
+      rabbit:
+        bindings:
+          solicitar-impressao-carteira-event:
+            content-type: application/json
+            producer:
+              exchangeType: topic
+          solicitar-cobranca-segunda-via-carteira-event:
+            content-type: application/json
+            producer:
+              exchangeType: topic
