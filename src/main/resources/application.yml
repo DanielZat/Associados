@@ -9,7 +9,7 @@ server:
 
 spring:
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbit:5672
   cloud:
     stream:
       rabbit:
