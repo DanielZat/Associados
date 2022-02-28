@@ -2,6 +2,7 @@ package com.boasaude.associados.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.boasaude.associados.request.SolicitacaoCarteiraRequest;
@@ -22,13 +23,14 @@ public class CarteirinhaController {
 
     private final CarteirinhaService carteirinhaService;
 
-    @PostMapping("")
+    @PostMapping()
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "203", description = "Solicitação de segunda via de carteirinha criada com sucesso", content = @Content(
+            @ApiResponse(responseCode = "201", description = "Solicitação de segunda via de carteirinha criada com sucesso", content = @Content(
                     schema = @Schema(
                             implementation = SolicitacaoCarteiraResponse.class))),
             @ApiResponse(responseCode = "400", description = "Solicitação não pode ser realizada")
     })
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<SolicitacaoCarteiraResponse> solicitarSegundaViaCarteirinha(@RequestBody SolicitacaoCarteiraRequest solicitacaoCarteiraRequest) {
         return carteirinhaService.solicitarSegundaViaCarteirinha(solicitacaoCarteiraRequest);
     }

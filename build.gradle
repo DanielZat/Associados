@@ -34,6 +34,7 @@ configurations {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
 	implementation 'org.springdoc:springdoc-openapi-webflux-core:1.4.3'
@@ -43,7 +44,6 @@ dependencies {
 	implementation 'org.hibernate:hibernate-validator:6.1.0.Final'
 	implementation 'org.apache.commons:commons-lang3:3.10'
 	implementation 'junit:junit:4.13.1'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

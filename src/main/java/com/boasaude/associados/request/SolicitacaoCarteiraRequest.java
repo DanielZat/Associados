@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SolicitacaoCarteiraRequest {
 
-    public String id;
+    private String id;
 }
