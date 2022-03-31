@@ -23,9 +23,9 @@ public class HistoricoConsultaController {
 
     @GetMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Histórico localizado com sucesso", content = @Content(schema = @Schema(
+            @ApiResponse(responseCode = "200", description = "Histórico localizado com sucesso.", content = @Content(schema = @Schema(
                     implementation = ConsultaResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum histórico médico")
+            @ApiResponse(responseCode = "404", description = "Nenhuma consulta encontrada para este associado.")
     })
     public Flux<ConsultaResponse> buscarHistoricoConsultaAssociado(@PathVariable("id") String id) {
         return historicoConsultaService.buscarHistoricoConsultaAssociado(id);

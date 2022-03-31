@@ -25,10 +25,11 @@ public class CarteirinhaController {
 
     @PostMapping()
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Solicitação de segunda via de carteirinha criada com sucesso", content = @Content(
+            @ApiResponse(responseCode = "201", description = "Solicitação de segunda via de carteirinha criada com sucesso.", content = @Content(
                     schema = @Schema(
                             implementation = SolicitacaoCarteiraResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Solicitação não pode ser realizada")
+            @ApiResponse(responseCode = "400", description = "Não é possível solicitar segunda via de carteira para este associado."),
+            @ApiResponse(responseCode = "404", description = "Associado não encontrado.")
     })
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<SolicitacaoCarteiraResponse> solicitarSegundaViaCarteirinha(@RequestBody SolicitacaoCarteiraRequest solicitacaoCarteiraRequest) {

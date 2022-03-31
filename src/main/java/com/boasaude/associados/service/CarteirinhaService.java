@@ -7,6 +7,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.boasaude.associados.exception.BadRequestException;
+import com.boasaude.associados.exception.NotFoundException;
 import com.boasaude.associados.messaging.binding.EmissaoCobrancaSegundaViaCarteiraEventChannel;
 import com.boasaude.associados.messaging.binding.SolicitacaoImpressaoCarteiraEventChannel;
 import com.boasaude.associados.messaging.model.SolicitacaoCobrancaSegundaViaPayload;
@@ -31,15 +32,16 @@ public class CarteirinhaService {
     public Mono<SolicitacaoCarteiraResponse> solicitarSegundaViaCarteirinha(SolicitacaoCarteiraRequest solicitacaoCarteiraRequest) {
 
         return associadoRepository.buscarAssociadoPorId(solicitacaoCarteiraRequest.getId())
+                .switchIfEmpty(Mono.error(new NotFoundException("Associado não encontrado.")))
                 .filter(associadoEntity -> Boolean.TRUE.equals(associadoEntity.getAtivo()))
+                .switchIfEmpty(Mono.error(new BadRequestException("Não é possível solicitar segunda via de carteira para este associado.")))
                 .map(associadoEntity -> {
                     solicitarImpressaoCarteirinha(associadoEntity.getId());
                     emitirCobrancaSegundaViaCarteirinha(associadoEntity.getId());
                     return SolicitacaoCarteiraResponse.builder()
-                            .mensagem("Solicitação registrada com sucesso. Você receberá seu novo cartão nos próximos dias")
+                            .mensagem("Solicitação registrada com sucesso. Você receberá seu novo cartão nos próximos dias.")
                             .build();
-                })
-                .switchIfEmpty(Mono.error(new BadRequestException("Não é possível solicitar segunda via de carteira para este associado")));
+                });
     }
 
     public void solicitarImpressaoCarteirinha(String id) {

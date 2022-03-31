@@ -43,7 +43,7 @@ dependencies {
 	implementation 'javax.el:javax.el-api:3.0.0'
 	implementation 'org.hibernate:hibernate-validator:6.1.0.Final'
 	implementation 'org.apache.commons:commons-lang3:3.10'
-	implementation 'junit:junit:4.13.1'
+	implementation 'junit:junit:4.13'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

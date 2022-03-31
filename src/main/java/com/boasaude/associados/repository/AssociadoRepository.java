@@ -4,7 +4,6 @@ import static com.boasaude.associados.enums.SexoEnum.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.boasaude.associados.entity.AssociadoEntity;
 import com.boasaude.associados.entity.EnderecoEntity;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -21,16 +21,14 @@ public class AssociadoRepository {
 
     public Mono<AssociadoEntity> buscarAssociadoPorId(String id) {
 
-        return Mono.just(criarListaAssociados()
-                .stream()
+        return criarListaAssociados()
                 .filter(associadoEntity -> id.equals(associadoEntity.getId()))
-                .findAny()
-                .get());
+                .single();
     }
 
-    private List<AssociadoEntity> criarListaAssociados() {
+    private Flux<AssociadoEntity> criarListaAssociados() {
 
-        return Arrays.asList(AssociadoEntity.builder()
+        return Flux.fromIterable(Arrays.asList(AssociadoEntity.builder()
                 .id("12345678")
                 .nome("Darci Oliveira")
                 .cpf("60624654801")
@@ -62,6 +60,6 @@ public class AssociadoRepository {
                                 .cidade("Canoas")
                                 .estado("RS")
                                 .build())
-                        .build());
+                        .build()));
     }
 }
